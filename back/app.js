@@ -3,6 +3,10 @@ const mongoose = require("mongoose");
 const app = express();
 app.use(express.json());
 
+const path = require("path");
+const sauceRoutes = require("./routes/sauce");
+const userRoutes = require("./routes/user");
+
 mongoose
   .connect(
     "mongodb+srv://Freak_Chicken:Petrucci28@cluster0.8yoprjn.mongodb.net/?retryWrites=true&w=majority",
@@ -24,8 +28,8 @@ app.use((req, res, next) => {
   next();
 });
 
-// app.use("/images", express.static(path.join(__dirname, "images")));
-// app.use("/api/stuff", stuffRoutes);
-// app.use("/api/auth", userRoutes);
+app.use("/images", express.static(path.join(__dirname, "images")));
+app.use("/api/sauce", sauceRoutes);
+app.use("/api/auth", userRoutes);
 
 module.exports = app;

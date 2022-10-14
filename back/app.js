@@ -1,15 +1,24 @@
+const dotenv = require("dotenv");
+dotenv.config();
 const express = require("express");
 const mongoose = require("mongoose");
 const app = express();
 app.use(express.json());
 
 const path = require("path");
+const { db } = require("./models/Sauce");
 const sauceRoutes = require("./routes/sauce");
 const userRoutes = require("./routes/user");
 
 mongoose
   .connect(
-    "mongodb+srv://Freak_Chicken:Petrucci28@cluster0.8yoprjn.mongodb.net/?retryWrites=true&w=majority",
+    "mongodb+srv://" +
+      process.env.DB_USERNAME +
+      ":" +
+      process.env.DB_PASSWORD +
+      "@" +
+      process.env.DB_HOST +
+      "?retryWrites=true&w=majority",
     { useNewUrlParser: true, useUnifiedTopology: true }
   )
   .then(() => console.log("Connexion à MongoDB réussie !"))
@@ -25,11 +34,12 @@ app.use((req, res, next) => {
     "Access-Control-Allow-Methods",
     "GET, POST, PUT, DELETE, PATCH, OPTIONS"
   );
+  res.setHeader("Cross-Origin-Resource-Policy", "cross-origin");
   next();
 });
 
 app.use("/images", express.static(path.join(__dirname, "images")));
-app.use("/api/sauce", sauceRoutes);
+app.use("/api/sauces", sauceRoutes);
 app.use("/api/auth", userRoutes);
 
 module.exports = app;

@@ -1,15 +1,18 @@
+//Imports
 const dotenv = require("dotenv");
 dotenv.config();
 const express = require("express");
 const mongoose = require("mongoose");
 const app = express();
-app.use(express.json());
-
 const path = require("path");
-const { db } = require("./models/Sauce");
+//const { db } = require("./models/Sauce");
 const sauceRoutes = require("./routes/sauce");
 const userRoutes = require("./routes/user");
 
+//Pour parser les objets JSON
+app.use(express.json());
+
+// Connexion à la base de données
 mongoose
   .connect(
     "mongodb+srv://" +
@@ -24,6 +27,9 @@ mongoose
   .then(() => console.log("Connexion à MongoDB réussie !"))
   .catch(() => console.log("Connexion à MongoDB échouée !"));
 
+// Fonctionnalités du server express
+
+//Paramétrage des en-tête
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader(
@@ -38,8 +44,12 @@ app.use((req, res, next) => {
   next();
 });
 
+//Gestion des fichiers images
 app.use("/images", express.static(path.join(__dirname, "images")));
+
+//Routes
 app.use("/api/sauces", sauceRoutes);
 app.use("/api/auth", userRoutes);
 
+//Export
 module.exports = app;

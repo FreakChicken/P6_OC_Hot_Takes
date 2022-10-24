@@ -6,8 +6,11 @@ dotenv.config();
 //Export
 module.exports = (req, res, next) => {
   try {
+    //Récupérer le token dans l'en-tête authorization
     const token = req.headers.authorization.split(" ")[1];
+    //Verifier et décoder le token
     const decodedToken = jwt.verify(token, process.env.TOKEN_SECRET);
+    //récuperer l'userId dans le token
     const userId = decodedToken.userId;
     req.auth = {
       userId: userId,

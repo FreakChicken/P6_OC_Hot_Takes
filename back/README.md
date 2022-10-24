@@ -2,9 +2,9 @@
 
 ## Utilsation de l'API :
 
-Clonner le repository
+Cloner le repository
 
-Intialiser un fichier .env dans le dossier /back en y mettant les valeurs suivantes et en remplaçant les "\*\*\*" par vos propores valeurs (voir sinon le fichier .env-samples):
+Intialiser un fichier .env dans le dossier /back en y mettant les valeurs suivantes et en remplaçant les "\*\*\*" par vos propres valeurs (voir sinon le fichier .env-samples):
 
 DB_USERNAME= \*\*\*  
 DB_PASSWORD= \*\*\*  

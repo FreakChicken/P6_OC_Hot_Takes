@@ -28,7 +28,6 @@ mongoose
   .catch(() => console.log("Connexion à MongoDB échouée !"));
 
 // Fonctionnalités du server express
-
 //Paramétrage des en-tête
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");

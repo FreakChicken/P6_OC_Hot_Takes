@@ -9,11 +9,12 @@ const MIME_TYPES = {
 };
 
 //Configuration
-
+//destination du fichier
 const storage = multer.diskStorage({
   destination: (req, file, callback) => {
     callback(null, "images");
   },
+  //Nom du fichier
   filename: (req, file, callback) => {
     const name = file.originalname.split(" ").join("_");
     const extension = MIME_TYPES[file.mimetype];

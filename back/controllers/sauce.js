@@ -1,10 +1,11 @@
-//Import
+//Imports
 const Sauce = require("../models/Sauce");
+// FileSystem pour le modification du systeme de fichiers (suppression des images)
 const fs = require("fs");
 
 //Créer une sauce
 exports.createSauce = (req, res, next) => {
-  const sauceObject = JSON.parse(req.body.sauce);
+  const sauceObject = JSON.parse(req.body.sauce); //données de la requête
   delete sauceObject._id;
   delete sauceObject._userId;
   const sauce = new Sauce({
@@ -14,7 +15,7 @@ exports.createSauce = (req, res, next) => {
       req.file.filename
     }`,
   });
-
+  //enregistrement dans la base de données
   sauce
     .save()
     .then(() => {
@@ -31,8 +32,9 @@ exports.getAllSauces = (req, res, next) => {
     .then((sauces) => res.status(200).json(sauces))
     .catch((error) => res.status(400).json({ error }));
 };
-
+//Affichage de la page d'une sauce
 exports.getOneSauce = (req, res, next) => {
+  //ID de la sauce dans la requête
   Sauce.findOne({ _id: req.params.id })
     .then((sauce) => res.status(200).json(sauce))
     .catch((error) => res.status(404).json({ error }));
@@ -45,8 +47,10 @@ exports.deleteSauce = (req, res, next) => {
       if (sauce.userId != req.auth.userId) {
         res.status(401).json({ message: "Not authorized" });
       } else {
+        //Suppression de l'image
         const filename = sauce.imageUrl.split("/images/")[1];
         fs.unlink(`images/${filename}`, () => {
+          //Suppression de la sauce
           Sauce.deleteOne({ _id: req.params.id })
             .then(() => {
               res.status(200).json({ message: "Objet supprimé !" });

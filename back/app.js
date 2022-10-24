@@ -3,15 +3,15 @@ const dotenv = require("dotenv");
 dotenv.config();
 const express = require("express");
 const mongoose = require("mongoose");
-const app = express();
 const path = require("path");
-//const { db } = require("./models/Sauce");
 const sauceRoutes = require("./routes/sauce");
 const userRoutes = require("./routes/user");
+const helmet = require("helmet");
+const mongoSanitize = require("express-mongo-sanitize");
+const app = express();
 
-//Pour parser les objets JSON
-app.use(express.json());
-
+//Sécurisation des en-têtes avec helmet
+app.use(helmet());
 // Connexion à la base de données
 mongoose
   .connect(
@@ -44,6 +44,10 @@ app.use((req, res, next) => {
   next();
 });
 
+//protection contre les injections
+app.use(mongoSanitize());
+//Pour parser les objets JSON
+app.use(express.json());
 //Gestion des fichiers images
 app.use("/images", express.static(path.join(__dirname, "images")));
 

@@ -2,14 +2,19 @@
 
 ## Utilsation de l'API :
 
+Prérequis :
+
+- Node 16 minimum
+- NPM 8 minimum
+
 Cloner le repository
 
-Intialiser un fichier .env dans le dossier /back en y mettant les valeurs suivantes et en remplaçant les "\*\*\*" par vos propres valeurs (voir sinon le fichier .env-samples):
+Intialiser un fichier .env dans le dossier /back en y mettant les valeurs suivantes :
 
-DB_USERNAME= \*\*\*  
-DB_PASSWORD= \*\*\*  
-DB_HOST= \*\*\*  
-TOKEN_SECRET= \*\*\*
+DB_USERNAME=Freak_Chicken
+DB_PASSWORD=Petrucci28
+DB_HOST=cluster0.8yoprjn.mongodb.net/
+TOKEN_SECRET=RANDOM_TOKEN_SECRET
 
 DB_USERNAME étant l'utilisateur de base de données MongoDB  
 DB_PASSWORD étant le mot de passe de l'utilisateur de la base données  

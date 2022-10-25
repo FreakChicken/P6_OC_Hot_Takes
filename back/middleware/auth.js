@@ -12,6 +12,7 @@ module.exports = (req, res, next) => {
     const decodedToken = jwt.verify(token, process.env.TOKEN_SECRET);
     //récuperer l'userId dans le token
     const userId = decodedToken.userId;
+    //rajout de l'user ID dans la requête
     req.auth = {
       userId: userId,
     };

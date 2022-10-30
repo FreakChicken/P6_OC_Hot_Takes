@@ -6,11 +6,9 @@ const fs = require("fs");
 //Créer une sauce
 exports.createSauce = (req, res, next) => {
   const sauceObject = JSON.parse(req.body.sauce); //données de la requête
-  delete sauceObject._id;
-  delete sauceObject._userId;
   const sauce = new Sauce({
+    //opérateur spread pour faire une copie des données de la requête
     ...sauceObject,
-    userId: req.auth.userId,
     imageUrl: `${req.protocol}://${req.get("host")}/images/${
       req.file.filename
     }`,
@@ -124,16 +122,17 @@ exports.modifySauce = (req, res, next) => {
 
 //Gestion des likes/dislikes
 exports.likeDislikeSauce = (req, res, next) => {
+  // J'aime
   if (req.body.like === 1) {
-    // J'aime
     Sauce.updateOne(
       { _id: req.params.id },
       { $push: { usersLiked: req.body.userId }, $inc: { likes: +1 } }
     )
       .then(() => res.status(200).json({ message: "Like ajouté !" }))
       .catch((error) => res.status(400).json({ error }));
-  } else if (req.body.like === -1) {
+
     // Je n'aime pas
+  } else if (req.body.like === -1) {
     Sauce.updateOne(
       { _id: req.params.id },
       { $push: { usersDisliked: req.body.userId }, $inc: { dislikes: +1 } }

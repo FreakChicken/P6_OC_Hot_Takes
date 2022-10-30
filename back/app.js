@@ -43,7 +43,7 @@ app.use((req, res, next) => {
   next();
 });
 
-//protection contre les injections
+//protection contre les injections dans MongoDB
 app.use(mongoSanitize());
 //Pour parser les objets JSON
 app.use(express.json());

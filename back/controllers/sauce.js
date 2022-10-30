@@ -74,8 +74,8 @@ exports.modifySauce = (req, res, next) => {
     Sauce.findOne({ _id: req.params.id })
       .then((sauce) => {
         const filename = sauce.imageUrl.split("/images/")[1]; // Nom de l'image dans le dossier /images/
+        // Supprimer l'image
         fs.unlink(`images/${filename}`, () => {
-          // Supprimer l'image
           // Mettre à jour la Sauce
           Sauce.updateOne(
             {
